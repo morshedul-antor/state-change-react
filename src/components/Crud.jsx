@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 
 function Crud() {
-    const defaultList = [
-        { name: "ItemOne" },
-        { name: "ItemTwo" },
-        { name: "ItemThree" },
-    ];
+    // const defaultList = [
+    //     { name: "ItemOne" },
+    //     { name: "ItemTwo" },
+    //     { name: "ItemThree" },
+    // ];
 
-    const [list, updateList] = useState(defaultList);
+    const [list, updateList] = useState([]);
     const [task, setTask] = useState("");
+    console.log("list", list);
 
     function handleChange(e) {
         e.preventDefault();
@@ -32,6 +33,14 @@ function Crud() {
         ]);
     };
 
+    const lineRemove = (arr, index) => {
+        return updateList(
+            arr.filter((e, i) => {
+                return i !== index;
+            })
+        );
+    };
+
     return (
         <div>
             <form onSubmit={onSubmitTask}>
@@ -43,7 +52,7 @@ function Crud() {
                         type="text"
                         id="taskInput"
                     />
-                    <button type="submit">Add Task</button>
+                    +<button type="submit">Add Task</button>
                 </div>
             </form>
 
@@ -52,12 +61,34 @@ function Crud() {
                     return (
                         <div>
                             <span>{item.name}</span>
-                            <button
+
+                            {/* <button
                                 name={item.name}
-                                onClick={() => removeItem(index)}
+                                onClick={(e) => handleRemoveItem(e)}
                             >
-                                X
+                                x1
+                            </button> */}
+
+                            {/* <button onClick={() => removeItem(index)}>
+                                x2
+                            </button> */}
+
+                            <button onClick={() => lineRemove(list, index)}>
+                                x3
                             </button>
+
+                            {/* <button
+                                name={item.name}
+                                onClick={() =>
+                                    updateList((list) =>
+                                        list.filter(
+                                            (_, i) => i !== list.length - 1
+                                        )
+                                    )
+                                }
+                            >
+                                x4
+                            </button> */}
                         </div>
                     );
                 })}
